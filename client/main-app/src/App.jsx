@@ -8,9 +8,11 @@ const App = () => {
     fetch("http://localhost:3001/data")
       .then((res) => res.json())
       .then((res) => {
-        setData(res[0].data);
+        setData(res.data);
       });
   }, []);
+
+  console.log(data);
 
   return <div>{JSON.stringify(data)}</div>;
 };
