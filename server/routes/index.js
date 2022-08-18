@@ -5,20 +5,28 @@ Router.get("/", (req, res) => {
   res.status(200).send("Hello World");
 });
 
-Router.post("/data", (req, res) => {
-  const newData = new Model(req.body);
-  try {
-    newData.save((err) => {
-      if (err) {
-        return err;
-      } else {
-        res.status(200).send({ success: true });
-      }
-    });
-  } catch (error) {
-    res.status(200).send(error);
-  }
-});
+// Router.post("/data", (req, res) => {
+//   const newData = new Model({
+//     data: req.body.data,
+//   });
+//   try {
+//     newData.save((err) => {
+//       if (err) {
+//         return err;
+//       } else {
+//         res.status(200).send({ success: true });
+//       }
+//     });
+//   } catch (error) {
+//     res.status(200).send(error);
+//   }
+// });
 
-Router.get("/data", (req, res) => {});
+Router.get("/data", async (req, res) => {
+  await Model.find({})
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => res.status(404).send(err));
+});
 module.exports = Router;
